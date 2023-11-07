@@ -1,0 +1,44 @@
+---
+title: "Cleansing Online Retails Dataset"
+output: html_document
+date: "2023-08-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# This is Data cleansing for online retails dataset from TATA online internship program.
+
+## Importing data
+```{r}
+library("readxl")
+Online_Retail_Data_Set<-read_excel("C:/Users/HP/Downloads/Online Retail Data Set.xlsx",)
+```
+
+## Sorting data to see what I should clean.
+```{r}
+Online_Retail_Data_Set[order(Online_Retail_Data_Set$UnitPrice),]
+```
+The original data contains negative unit price but we need only positive number in order to calculate the revenue. So, we select only positive unit price.
+
+## Selecting only positive unit price.
+```{r}
+data<-subset(Online_Retail_Data_Set,UnitPrice>0)
+data
+```
+
+## Adding the new column to calculate the revenue.
+```{r}
+library(dplyr)
+data<- mutate(data,Revenue
+              =data$Quantity*data$UnitPrice)
+data
+```
+
+## Save cleaned data
+```{r}
+write.csv(data,"modified_online_sale.csv"
+          , row.names = F)
+```
+
